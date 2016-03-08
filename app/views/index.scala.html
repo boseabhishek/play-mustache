@@ -1,0 +1,32 @@
+@(message: String)
+
+@import com.kissthinker.blah.Blah._
+
+@main(message) {
+    <script id="example-template" type="text/html">
+        <h1>@message</h1>
+
+        <div>
+            <p>Author: {{author}}</p>
+            <p>Time: {{timeNow}}</p>
+        </div>
+
+        <h4>From Library (in "local-build" change string): @blah</h4>
+    </script>
+}
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        var date = new Date();
+
+        var templateData = {
+            author: "David Ainslie",
+            timeNow: date.getHours() + ':' + date.getMinutes()
+        };
+
+        // Use jQuery to reference our 'example-template' script block and grab the HTML contents it contains.
+        var template = $('#example-template').html();
+
+        $('body').append(Mustache.render(template, templateData));
+    });
+</script>
