@@ -52,7 +52,10 @@ object Build extends Build {
   val root = sys.props.get("local-build") match {
     case Some("true") =>
       println("*** Local Build - Using relative and not correctly versioned modules ***")
-      build.dependsOn(ProjectRef(file("../play-mustache-lib"), "play-mustache-lib") % "test->test;compile->compile")
+
+      val playMustacheLib = ProjectRef(file("../play-mustache-lib"), "play-mustache-lib")
+
+      build.dependsOn(playMustacheLib % "test->test;compile->compile").aggregate(playMustacheLib)
 
     case _ =>
       /*
@@ -69,6 +72,8 @@ object Build extends Build {
       })
       */
 
-      build.dependsOn(RootProject(uri("https://github.com/davidainslie/play-mustache-lib.git")))
+      val playMustacheLib = RootProject(uri("https://github.com/davidainslie/play-mustache-lib.git"))
+
+      build.dependsOn(playMustacheLib % "test->test;compile->compile").aggregate(playMustacheLib)
   }
 }
