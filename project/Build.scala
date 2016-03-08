@@ -55,6 +55,9 @@ object Build extends Build {
       build.dependsOn(ProjectRef(file("../play-mustache-lib"), "play-mustache-lib") % "test->test;compile->compile")
 
     case _ =>
+      /*
+      NORMALLY YOU WOULD USE THE FOLLOWING, BUT WE SHALL DECLARE THE DEPENDENCY DIRECTLY TO GITHUB
+
       build.settings(libraryDependencies ++= {
         val `play-mustache-verson` = "1.0.0-SNAPSHOT"
 
@@ -64,5 +67,8 @@ object Build extends Build {
           "kissthinker" %% "play-mustache-lib" % `play-mustache-verson` % Test classifier "tests" withSources()
         )
       })
+      */
+
+      build.dependsOn(RootProject(uri("https://github.com/davidainslie/play-mustache-lib.git")))
   }
 }
